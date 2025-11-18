@@ -4,57 +4,219 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Pete's Pet Shop</title>
+    <title>Housem's and Firas's Pet Shop</title>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+      .notification-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        animation: slideInRight 0.3s ease-out;
+      }
+      
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      .pet-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-bottom: 20px;
+        height: 100%;
+      }
+      
+      .pet-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      }
+      
+      .pet-image {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+      }
+      
+      .detail-item {
+        margin-bottom: 5px;
+        padding: 3px 0;
+      }
+      
+      .status-available {
+        color: #28a745;
+        font-weight: bold;
+      }
+      
+      .status-adopted {
+        color: #dc3545;
+        font-weight: bold;
+      }
+      
+      .stats-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      
+      .btn-adopt:disabled {
+        cursor: not-allowed;
+      }
+      
+      .pet-details {
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+        margin-top: 10px;
+      }
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+      /* Hide template properly */
+      #petTemplate {
+        display: none !important;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
+      <!-- Header -->
       <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">Pete's Pet Shop</h1>
+        <div class="col-12">
+          <h1 class="text-center">Welcome To Our Pet Shop</h1>
+          <p class="text-center text-muted">Here you can Adopt a furry friend using blockchain technology</p>
           <hr/>
-          <br/>
         </div>
       </div>
 
+      <!-- Stats Dashboard -->
+      <div class="row">
+        <div class="col-12">
+          <div class="stats-card">
+            <div class="card-body">
+              <div class="row text-center">
+                <div class="col-md-3 mb-3 mb-md-0">
+                  <h6>Connected Account</h6>
+                  <div id="accountAddress" class="badge bg-light text-dark fs-6">Not connected</div>
+                </div>
+                <div class="col-md-3 mb-3 mb-md-0">
+                  <h6>Total Pets</h6>
+                  <h4 id="totalPets" class="mb-0">0</h4>
+                </div>
+                <div class="col-md-3 mb-3 mb-md-0">
+                  <h6>Adopted</h6>
+                  <h4 id="adoptedPets" class="mb-0">0</h4>
+                </div>
+                <div class="col-md-3">
+                  <h6>Available</h6>
+                  <h4 id="availablePets" class="mb-0">0</h4>
+                </div>
+              </div>
+              <div class="mt-3">
+                <div class="progress" style="height: 8px; background: rgba(255,255,255,0.3);">
+                  <div id="adoptionProgress" class="progress-bar bg-warning" 
+                       role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="d-block text-center mt-1" id="adoptionPercentage">0% Adopted</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pets Grid -->
       <div id="petsRow" class="row">
         <!-- PETS LOAD HERE -->
       </div>
     </div>
 
+    <!-- Notification area -->
+    <div id="notification-container"></div>
+
+    <!-- Pet Template (HIDDEN - used for cloning only) -->
     <div id="petTemplate" style="display: none;">
       <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="panel panel-default panel-pet">
-          <div class="panel-heading">
-            <h3 class="panel-title">Scrappy</h3>
-          </div>
-          <div class="panel-body">
-            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
-            <br/><br/>
-            <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br/>
-            <strong>Age</strong>: <span class="pet-age">3</span><br/>
-            <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/>
-            <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
+        <div class="card pet-card h-100">
+          <img class="pet-image card-img-top" src="" alt="Pet image">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title panel-title">Pet Name</h5>
+            
+            <!-- Pet Details -->
+            <div class="pet-details flex-grow-1">
+              <div class="detail-item">
+                <small><strong>Breed:</strong> <span class="pet-breed">Breed</span></small>
+              </div>
+              <div class="detail-item">
+                <small><strong>Age:</strong> <span class="pet-age">0 years</span></small>
+              </div>
+              <div class="detail-item">
+                <small><strong>Location:</strong> <span class="pet-location">Location</span></small>
+              </div>
+              <div class="detail-item">
+                <small><strong>Gender:</strong> <span class="pet-gender">Unknown</span></small>
+              </div>
+              <div class="detail-item">
+                <small><strong>Size:</strong> <span class="pet-size">Unknown</span></small>
+              </div>
+              <div class="detail-item">
+                <small><strong>Vaccinated:</strong> <span class="pet-vaccinated text-success">Unknown</span></small>
+              </div>
+            </div>
+
+            <!-- Status -->
+            <div class="mt-2 mb-2">
+              <span class="adopter status-available">Available</span>
+            </div>
+
+            <!-- Description Preview -->
+            <div class="pet-description-preview mb-3">
+              <small class="text-muted pet-description-short">No description available</small>
+            </div>
+
+            <!-- Buttons -->
+            <div class="mt-auto">
+              <button class="btn btn-primary btn-adopt w-100 mb-2" type="button" data-id="0">
+                Adopt
+              </button>
+              <button class="btn btn-outline-secondary btn-view-details w-100" type="button" data-id="0">
+                View Details
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Pet Details Modal -->
+    <div class="modal fade" id="petDetailsModal" tabindex="-1" aria-labelledby="petDetailsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="petDetailsModalLabel">Pet Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modalBody">
+            <!-- Content will be loaded dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Web3 -->
     <script src="js/web3.min.js"></script>
+    <!-- App JavaScript -->
     <script src="js/app.js"></script>
   </body>
 </html>
