@@ -1,18 +1,18 @@
 // Application Configuration
 const CONFIG = {
-    CONTRACT_ADDRESS: "0x75157a566F4d65C7015EEcc93bBa448a875250c5",
-    DEFAULT_PROVIDER: 'http://127.0.0.1:7545',
-    NOTIFICATION_TIMEOUT: 5000
+    CONTRACT_ADDRESS: "0x0eaB3CE5D2ee0dA8da0733b86679093Fd7A1a817", //This is the address where your smart contract is deployed (from Ganache).
+    DEFAULT_PROVIDER: 'http://127.0.0.1:7545', //If the user does NOT have MetaMask, the app uses Ganache RPC directly.
+    NOTIFICATION_TIMEOUT: 5000  //How long a notification stays visible (5 seconds).
 };
 
 // Utility Functions
 const Utils = {
-    shortenAddress: (address) => {
-        if (!address || address === '0x0') return 'Not connected';
-        return `${address.substring(0, 6)}...${address.slice(-4)}`;
+    shortenAddress: (address) => { // Shortens Ethereum address for display (e.g., 0x1234...abcd)
+        if (!address || address === '0x0') return 'Not connected'; // Handle null or zero address
+        return `${address.substring(0, 6)}...${address.slice(-4)}`; // First 6 and last 4 characters
     },
 
-    formatAdoptionStatus: (adopterAddress) => {
+    formatAdoptionStatus: (adopterAddress) => { // Returns adoption status and whether adopted
         if (!adopterAddress || adopterAddress === '0x0000000000000000000000000000000000000000') {
             return { status: 'Available', isAdopted: false };
         }
@@ -22,23 +22,23 @@ const Utils = {
         };
     },
 
-    validateResponse: (response) => {
+    validateResponse: (response) => { // Validates fetch response
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`); // Throw error for non-2xx responses
         }
         return response;
     },
 
-    isSameAddress: (addr1, addr2) => {
+    isSameAddress: (addr1, addr2) => { // Compares two Ethereum addresses case-insensitively
         if (!addr1 || !addr2) return false;
         return addr1.toLowerCase() === addr2.toLowerCase();
     }
 };
 
 // Main Application
-const App = {
+const App = { // App Object : Everything in the app (account, contract, pets, modals…) is stored inside App
     // State Management
-    state: {
+    state: { // Current state of the application
         web3Provider: null,
         account: '0x0',
         transactionInProgress: false,
@@ -46,41 +46,41 @@ const App = {
         currentModal: null
     },
 
-    contracts: {
+    contracts: { // Smart contract instances
         Adoption: null
     },
 
-    flags: {
+    flags: { // Initialization flags
         petsLoaded: false,
         eventsBound: false,
         web3Initialized: false
     },
 
     // Initialization
-    init: async function() {
+    init: async function() { // Main initialization function
         try {
             console.group('🚀 App Initialization Started');
             
             // Initialize notification container
-            this.initNotificationContainer();
+            this.initNotificationContainer(); // Ensure notification container exists
             
             // Load pets data
-            if (!this.flags.petsLoaded) {
+            if (!this.flags.petsLoaded) { // Load pets only once
                 await this.loadPets();
                 this.flags.petsLoaded = true;
             }
 
             // Initialize Web3 and contract
-            await this.initWeb3();
-            await this.initContract();
+            await this.initWeb3(); // Setup Web3 provider and account
+            await this.initContract(); // Load and initialize smart contract
 
             // Bind event listeners
-            if (!this.flags.eventsBound) {
+            if (!this.flags.eventsBound) { // Bind events only once
                 this.bindEvents();
                 this.flags.eventsBound = true;
             }
 
-            console.groupEnd();
+            console.groupEnd(); // End of initialization group
             this.showNotification('Application initialized successfully!', 'success');
 
         } catch (error) {
@@ -89,17 +89,17 @@ const App = {
         }
     },
 
-    initNotificationContainer: function() {
+    initNotificationContainer: function() { // Ensure notification container exists
         if ($('#notification-container').length === 0) {
             $('body').append('<div id="notification-container"></div>');
         }
     },
 
     // Web3 Initialization
-    initWeb3: async function() {
+    initWeb3: async function() { // Setup Web3 provider and account
         try {
             if (window.ethereum) {
-                this.state.web3Provider = window.ethereum;
+                this.state.web3Provider = window.ethereum; // Modern dapp browsers
                 console.log('🔗 Using MetaMask provider');
                 
                 // Request account access
@@ -125,14 +125,14 @@ const App = {
         }
     },
 
-    requestAccounts: async function() {
+    requestAccounts: async function() { // Request account access from MetaMask
         try {
             // Request account access
             const accounts = await window.ethereum.request({ 
                 method: 'eth_requestAccounts' 
             });
             
-            if (accounts.length > 0) {
+            if (accounts.length > 0) { // If user approved access
                 this.state.account = accounts[0];
                 $('#accountAddress').text(Utils.shortenAddress(this.state.account));
                 console.log('👤 Initial account:', this.state.account);
@@ -145,14 +145,14 @@ const App = {
         }
     },
 
-  setupEthereumListeners: function() {
+  setupEthereumListeners: function() { // Setup listeners for MetaMask events
     if (window.ethereum) {
 
         // Accounts changed event
-        window.ethereum.on('accountsChanged', async (accounts) => {
-            console.log('🔄 Accounts changed:', accounts);
+        window.ethereum.on('accountsChanged', async (accounts) => { // Handle account changes
+            console.log('🔄 Accounts changed:', accounts); 
 
-            if (accounts.length === 0) {
+            if (accounts.length === 0) { 
                 // User disconnected all accounts
                 this.state.account = '0x0';
                 this.showNotification('🔌 All accounts disconnected', 'warning');
@@ -171,7 +171,7 @@ const App = {
         });
 
         // Chain changed event
-        window.ethereum.on('chainChanged', (chainId) => {
+        window.ethereum.on('chainChanged', (chainId) => { // Handle network changes
             console.log('🔄 Network changed:', chainId);
             this.showNotification('🔄 Network changed, reloading page...', 'info');
             setTimeout(() => {
@@ -180,7 +180,7 @@ const App = {
         });
 
         // Connect event
-        window.ethereum.on('connect', (connectInfo) => {
+        window.ethereum.on('connect', (connectInfo) => { // Handle connection event
             console.log('🔗 Connected to chain:', connectInfo);
             this.showNotification('🔗 Wallet connected', 'success');
         });
@@ -196,7 +196,7 @@ const App = {
 }
 ,
 
-    loadAccount: async function() {
+    loadAccount: async function() { // Load the current Ethereum account
         try {
             if (!this.flags.web3Initialized) {
                 console.log('⏳ Web3 not initialized yet');
@@ -227,19 +227,19 @@ const App = {
     },
 
     // Contract Initialization
-    initContract: async function() {
+    initContract: async function() { // Load and initialize smart contract
         try {
-            const response = await fetch('../build/contracts/Adoption.json');
+            const response = await fetch('../build/contracts/Adoption.json'); // Fetch contract JSON
             Utils.validateResponse(response);
             
-            const contractData = await response.json();
-            this.contracts.Adoption = new web3.eth.Contract(
-                contractData.abi, 
-                CONFIG.CONTRACT_ADDRESS
+            const contractData = await response.json(); // Parse JSON data
+            this.contracts.Adoption = new web3.eth.Contract( // Initialize contract instance
+                contractData.abi,  // Use ABI from JSON
+                CONFIG.CONTRACT_ADDRESS // Use deployed contract address
             );
 
-            console.log('📄 Contract initialized at:', CONFIG.CONTRACT_ADDRESS);
-            await this.updateAdoptionStatus();
+            console.log('📄 Contract initialized at:', CONFIG.CONTRACT_ADDRESS); 
+            await this.updateAdoptionStatus(); // Update adoption status on initialization
 
         } catch (error) {
             throw new Error(`Contract initialization failed: ${error.message}`);
@@ -247,9 +247,9 @@ const App = {
     },
 
     // Data Loading
-    loadPets: async function() {
+    loadPets: async function() { // Load pets data from JSON file
         try {
-            console.log('🐕 Loading pets data...');
+            console.log('🐕 Loading pets data...'); 
             const response = await fetch('../pets.json');
             Utils.validateResponse(response);
             
@@ -263,7 +263,7 @@ const App = {
         }
     },
 
-    renderPets: function() {
+    renderPets: function() { // Render pet cards in the UI
         const petsRow = $('#petsRow');
         const petTemplate = $('#petTemplate').children().first(); // Get the first child of template
         
@@ -275,7 +275,7 @@ const App = {
         });
     },
 
-    createPetCard: function(pet, template) {
+    createPetCard: function(pet, template) { // Create a pet card from template and pet data
         // Clone the template (not the container)
         const card = template.clone();
         
@@ -289,7 +289,7 @@ const App = {
         card.find('.btn-view-details').attr('data-id', pet.id);
 
         // Handle optional fields
-        this.setOptionalField(card, '.pet-gender', pet.gender);
+        this.setOptionalField(card, '.pet-gender', pet.gender); // Gender
         this.setOptionalField(card, '.pet-size', pet.size);
         this.setVaccinationStatus(card, pet.vaccinated);
         this.setDescription(card, pet.description);
@@ -297,19 +297,19 @@ const App = {
         return card;
     },
 
-    setOptionalField: function(card, selector, value) {
+    setOptionalField: function(card, selector, value) { // Set optional field or hide if not available
         const element = card.find(selector);
         const container = element.closest('.detail-item');
         
         if (value) {
-            element.text(value);
+            element.text(value); // Set the text
             container.show();
         } else {
             container.hide();
         }
     },
 
-    setVaccinationStatus: function(card, vaccinated) {
+    setVaccinationStatus: function(card, vaccinated) { // Set vaccination status or hide if not available
         const element = card.find('.pet-vaccinated');
         const container = element.closest('.detail-item');
         
@@ -323,7 +323,7 @@ const App = {
         }
     },
 
-    setDescription: function(card, description) {
+    setDescription: function(card, description) { // Set short description or hide if not available
         const container = card.find('.pet-description-preview');
         const element = card.find('.pet-description-short');
         
@@ -338,43 +338,43 @@ const App = {
     },
 
     // Event Handling
-    bindEvents: function() {
+    bindEvents: function() { // Bind event listeners to UI elements
         if (this.flags.eventsBound) return;
 
         // Remove existing event handlers to prevent duplicates
-        $(document).off('click', '.btn-adopt');
-        $(document).off('click', '.btn-view-details');
-        $(document).off('click', '.btn-adopt-from-modal');
+        $(document).off('click', '.btn-adopt'); // Adopt button
+        $(document).off('click', '.btn-view-details'); // View Details button
+        $(document).off('click', '.btn-adopt-from-modal'); // Adopt button inside modal
 
         // Bind new event handlers
-        $(document).on('click', '.btn-adopt', (e) => this.handleAdopt(e));
+        $(document).on('click', '.btn-adopt', (e) => this.handleAdopt(e)); // Adopt button
         $(document).on('click', '.btn-view-details', (e) => {
             e.preventDefault();
             const petId = parseInt($(e.currentTarget).data('id'));
             this.showPetDetails(petId);
         });
-        $(document).on('click', '.btn-adopt-from-modal', (e) => {
+        $(document).on('click', '.btn-adopt-from-modal', (e) => { // Adopt button inside modal
             e.preventDefault();
             const petId = parseInt($(e.currentTarget).data('id'));
             this.handleModalAdopt(petId);
         });
 
         // Refresh button (optional - you can add this to your HTML)
-        $(document).on('click', '#refreshAccounts', () => {
+        $(document).on('click', '#refreshAccounts', () => { // Refresh accounts button
             this.refreshAccounts();
         });
 
         // Window events
-        $(window).on('focus', () => {
+        $(window).on('focus', () => { // Refresh accounts when window gains focus
             console.log('🔄 Window focused, refreshing accounts...');
             this.refreshAccounts();
         });
 
-        this.flags.eventsBound = true;
+        this.flags.eventsBound = true; // Mark events as bound
         console.log('🎯 Event handlers bound successfully');
     },
 
-    refreshAccounts: async function() {
+    refreshAccounts: async function() { // Refresh account and adoption status
         try {
             console.log('🔄 Refreshing accounts...');
             await this.loadAccount();
@@ -384,7 +384,7 @@ const App = {
         }
     },
 
-handleModalAdopt: function(petId) {
+handleModalAdopt: function(petId) { // Handle adopt button click from modal
     try {
         // Close & dispose modal cleanly
         if (this.state.currentModal) {
@@ -411,7 +411,7 @@ handleModalAdopt: function(petId) {
 ,
 
     // Adoption Process
-    handleAdopt: async function(event) {
+    handleAdopt: async function(event) { // Handle adopt button click
         event.preventDefault();
         
         if (this.state.transactionInProgress) {
@@ -453,7 +453,7 @@ handleModalAdopt: function(petId) {
         }
     },
 
-    executeAdoption: async function(petId) {
+    executeAdoption: async function(petId) { // Execute the adoption transaction
         // Always get fresh accounts list to ensure we're using the current selected account
         const accounts = await web3.eth.getAccounts();
         const currentAccount = accounts[0];
@@ -478,7 +478,7 @@ handleModalAdopt: function(petId) {
             });
     },
 
-    setButtonState: function(button, state) {
+    setButtonState: function(button, state) { // Update button appearance based on state
         const states = {
             processing: { 
                 text: 'Processing...', 
@@ -505,7 +505,7 @@ handleModalAdopt: function(petId) {
               .addClass(config.class);
     },
 
-    handleAdoptionError: function(error, button) {
+    handleAdoptionError: function(error, button) { // Handle errors during adoption
         console.error('Adoption error:', error);
         
         this.setButtonState(button, 'default');
@@ -528,19 +528,19 @@ handleModalAdopt: function(petId) {
     },
 
     // UI Updates
-    updateUI: function() {
+    updateUI: function() { // Update UI elements based on current state
         this.updateAccountDisplay();
         this.updateAdoptionStatus();
     },
 
-    updateAccountDisplay: function() {
+    updateAccountDisplay: function() { // Update displayed account address
         $('#accountAddress').text(Utils.shortenAddress(this.state.account));
         
         // Update any other account displays if needed
         $('.current-account').text(Utils.shortenAddress(this.state.account));
     },
 
-    updateAdoptionStatus: async function() {
+    updateAdoptionStatus: async function() { // Update adoption status of all pets
         if (!this.contracts.Adoption) {
             console.log('⏳ Contract not ready yet');
             return;
@@ -558,7 +558,7 @@ handleModalAdopt: function(petId) {
         }
     },
 
-    updatePetCards: function(adopters) {
+    updatePetCards: function(adopters) { // Update each pet card with adoption status
         $('.pet-card').each((index, cardElement) => {
             const card = $(cardElement);
             const adopterAddress = adopters[index];
@@ -568,7 +568,7 @@ handleModalAdopt: function(petId) {
         });
     },
 
-    updateCardStatus: function(card, status, isAdopted) {
+    updateCardStatus: function(card, status, isAdopted) { // Update individual pet card status
         const adopterSpan = card.find('.adopter');
         const adoptButton = card.find('.btn-adopt');
         
@@ -583,7 +583,7 @@ handleModalAdopt: function(petId) {
         }
     },
 
-    updateDashboard: function(adopters) {
+    updateDashboard: function(adopters) { // Update dashboard statistics
         const totalPets = this.state.pets.length;
         const adoptedPets = adopters.filter(addr => 
             addr !== '0x0000000000000000000000000000000000000000').length;
@@ -599,7 +599,7 @@ handleModalAdopt: function(petId) {
     },
 
     // Pet Details Modal
-    showPetDetails: async function(petId) {
+    showPetDetails: async function(petId) { // Show pet details in modal
         try {
             console.log(`🔍 Showing details for pet ID: ${petId}`);
             
@@ -645,10 +645,10 @@ handleModalAdopt: function(petId) {
         }
     },
 
-    populateModalContent: function(pet, adoptionStatus, statusBadgeClass, canAdopt) {
-        const modalBody = $('#modalBody');
-        
-        modalBody.html(`
+    populateModalContent: function(pet, adoptionStatus, statusBadgeClass, canAdopt) { // Populate modal with pet details
+        const modalBody = $('#modalBody'); // Modal body container
+        // Clear existing content
+        modalBody.html(` 
             <div class="row">
                 <div class="col-md-6 text-center">
                     <img src="${pet.picture}" class="img-fluid rounded mb-3" alt="${pet.name}" 
@@ -698,9 +698,9 @@ handleModalAdopt: function(petId) {
     },
 
     // Notification System
-    showNotification: function(message, type = 'info') {
-        const notificationClass = this.getNotificationClass(type);
-        const notificationIcon = this.getNotificationIcon(type);
+    showNotification: function(message, type = 'info') { // Show notification toast
+        const notificationClass = this.getNotificationClass(type); // Get Bootstrap class
+        const notificationIcon = this.getNotificationIcon(type); // Get icon based on type
         
         const notification = $(`
             <div class="alert alert-${notificationClass} alert-dismissible fade show notification-toast" role="alert">
@@ -719,7 +719,7 @@ handleModalAdopt: function(petId) {
         }, CONFIG.NOTIFICATION_TIMEOUT);
     },
 
-    getNotificationClass: function(type) {
+    getNotificationClass: function(type) { // Map notification type to Bootstrap class
         const classes = { 
             success: 'success', 
             error: 'danger', 
@@ -729,7 +729,7 @@ handleModalAdopt: function(petId) {
         return classes[type] || 'info';
     },
 
-    getNotificationIcon: function(type) {
+    getNotificationIcon: function(type) { // Map notification type to icon
         const icons = { 
             success: '✅', 
             error: '❌', 
@@ -747,7 +747,7 @@ handleModalAdopt: function(petId) {
 };
 
 // Initialize application when DOM is ready
-$(document).ready(function() {
+$(document).ready(function() { // DOM ready
     console.log('📄 DOM ready, initializing application...');
     
     // Check if Bootstrap is loaded
@@ -761,7 +761,7 @@ $(document).ready(function() {
 });
 
 // Global error handler for uncaught errors
-window.addEventListener('error', function(event) {
+window.addEventListener('error', function(event) { // Global error handler
     console.error('Global error:', event.error);
     App.showNotification('An unexpected error occurred. Please check the console.', 'error');
 });
