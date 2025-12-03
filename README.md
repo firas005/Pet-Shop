@@ -1,6 +1,8 @@
 Blockchain Pet Adoption DApp
 <div align="center">
-https://github.com/firas005/Pet-Shop/blob/e88306efc12322164800436f0914c3f4b611d803/app.png
+    ![Architecture Diagram]([https://raw.githubusercontent.com/YourUsername/YourRepo/main/assets/yourImageName.png](https://github.com/firas005/Pet-Shop/blob/e88306efc12322164800436f0914c3f4b611d803/app.png
+))
+
 A decentralized pet adoption platform built on Ethereum blockchain
 
 https://img.shields.io/badge/Solidity-0.5.0-363636?logo=solidity
