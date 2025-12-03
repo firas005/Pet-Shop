@@ -1,5 +1,6 @@
 Blockchain Pet Adoption DApp
 <div align="center">
+
 ![Architecture Diagram](https://raw.githubusercontent.com/firas005/Pet-Shop/e88306efc12322164800436f0914c3f4b611d803/app.png)
 
 
