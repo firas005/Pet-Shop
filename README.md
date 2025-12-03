@@ -11,10 +11,12 @@ A decentralized pet adoption platform built on Ethereum blockchain
 ![Bootstrap Badge](https://img.shields.io/badge/Bootstrap-5.3.0-7952B3?logo=bootstrap)
 ![Truffle Badge](https://img.shields.io/badge/Truffle-Suite-5E464D?logo=truffle)
 
-Live Demo Video: Watch Demo • Try It: Local Setup Guide
+[![Watch Demo Video](https://img.youtube.com/vi/JUdRTMknOAo/0.jpg)](https://youtu.be/JUdRTMknOAo)
+
 
 </div>
 📋 Table of Contents
+
 ✨ Features
 
 🏗️ Architecture
@@ -35,51 +37,43 @@ Live Demo Video: Watch Demo • Try It: Local Setup Guide
 
 ✨ Features
 🎯 Core Functionality
-Browse Available Pets: View 16 pets with detailed profiles (breed, age, location, vaccination status)
 
-Blockchain Adoption: Adopt pets via Ethereum smart contracts with on-chain transaction recording
+Browse Pets: View 16 pets with complete profiles (breed, age, location, vaccination status).
 
-Real-time Dashboard: Live statistics tracking (total/adopted/available pets, adoption progress)
+Blockchain Adoption: Adopt pets through Ethereum smart contracts — transactions recorded on-chain.
 
-Pet Details Modal: Comprehensive view with full description and adoption status
+Live Dashboard: Real-time metrics showing: total pets, adopted pets, available pets, and adoption percentage.
 
-Responsive Design: Fully responsive UI for desktop and mobile devices
+Detailed Pet Modal: Full pet details with adoption status and action buttons.
+
+Responsive UI: Mobile-first, fully responsive design using Bootstrap 5.
 
 🔄 Smart Features
-Real-time Status Updates: UI automatically updates after blockchain transactions
 
-MetaMask Integration: Seamless wallet connection with account/network change detection
+Real-Time Adoption Updates: UI instantly refreshes after blockchain interactions.
 
-Transaction Notifications: Toast notifications for success/error states
+MetaMask Integration: Automatic wallet detection + handling of account & network changes.
 
-Error Handling: Comprehensive error handling for failed transactions
+Toast Notifications: Clean success/error messages for blockchain events.
 
-Gas Estimation: Automatic gas calculation for transactions
+Robust Error Handling: Covers invalid IDs, failed transactions, and provider issues.
 
-🛡️ Security & UX
-Input Validation: Pet ID range validation (0-15)
+Gas Estimation: Automatically estimates and uses optimal gas limits.
 
-Duplicate Adoption Prevention: Checks if pet is already adopted
+🛡️ Security & UX Enhancements
 
-Wallet Connection Management: Handles MetaMask connection/disconnection
+Pet ID Validation: Ensures valid range (0–15) before sending transactions.
 
-Network Change Detection: Automatically reloads on network switch
+Double-Adoption Protection: Smart contract + frontend prevent re-adopting pets.
 
-Transaction State Management: Prevents double-spending during transactions
+Wallet Management: Handles connection/disconnection states gracefully.
 
+Network Change Awareness: App reloads automatically when user switches network.
+
+Transaction Locking: Prevents duplicate clicks / double-spending during pending transactions.
 🏗️ Architecture
 
-
-
-
-
-
-
-
-
-
-
-
+![UI Screenshot](https://raw.githubusercontent.com/firas005/Pet-Shop/6ad5dfd9c6f1e573d0250ade28ed08ada68da694/ux.png)
 
 Tech Stack
 Layer	Technology	Purpose
