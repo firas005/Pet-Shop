@@ -21,14 +21,12 @@ A decentralized pet adoption platform built on the Ethereum blockchain.
 ## 📋 Table of Contents
 - ✨ Features  
 - 🏗️ Architecture  
+- 🧰 Tech Stack  
 - 🚀 Quick Start  
-- 📸 Demo & Interface  
-- 🔧 Technical Details  
-- 📁 Project Structure  
+- 📜 Smart Contract  
+- ⚙️ Truffle Deployment Configuration  
+- 🗂 Project Structure  
 - 💡 Learning Outcomes  
-- 🛠️ Development  
-- 📄 License  
-
 ---
 
 ## ✨ Features
