@@ -1,17 +1,18 @@
-🐾 Blockchain Pet Adoption DApp
-<br> <div align="center">
+Blockchain Pet Adoption DApp
+<div align="center">
+
+![Architecture Diagram](https://raw.githubusercontent.com/firas005/Pet-Shop/e88306efc12322164800436f0914c3f4b611d803/app.png)
+
 
 A decentralized pet adoption platform built on Ethereum blockchain
-<br>
 
+![Solidity Badge](https://img.shields.io/badge/Solidity-0.5.0-363636?logo=solidity)
+![Web3 Badge](https://img.shields.io/badge/Web3.js-1.5.0-F16822?logo=ethereum)
+![Bootstrap Badge](https://img.shields.io/badge/Bootstrap-5.3.0-7952B3?logo=bootstrap)
+![Truffle Badge](https://img.shields.io/badge/Truffle-Suite-5E464D?logo=truffle)
 
+[![Watch Demo Video](https://img.youtube.com/vi/JUdRTMknOAo/0.jpg)](https://youtu.be/JUdRTMknOAo)
 
-
-
-
-
-
-<br>
 
 </div>
 📋 Table of Contents
@@ -19,8 +20,6 @@ A decentralized pet adoption platform built on Ethereum blockchain
 ✨ Features
 
 🏗️ Architecture
-
-🧰 Tech Stack
 
 🚀 Quick Start
 
@@ -41,225 +40,307 @@ A decentralized pet adoption platform built on Ethereum blockchain
 
 Browse Pets: View 16 pets with complete profiles (breed, age, location, vaccination status).
 
-On-Chain Adoption: Fully decentralized adoption using Ethereum smart contracts.
+Blockchain Adoption: Adopt pets through Ethereum smart contracts — transactions recorded on-chain.
 
-Live Dashboard: Real-time stats (total/adopted/available pets + progress bar).
+Live Dashboard: Real-time metrics showing: total pets, adopted pets, available pets, and adoption percentage.
 
-Pet Details Modal: Detailed view of each pet and adoption status.
+Detailed Pet Modal: Full pet details with adoption status and action buttons.
 
-Responsive UI using Bootstrap 5.
+Responsive UI: Mobile-first, fully responsive design using Bootstrap 5.
 
 🔄 Smart Features
 
-Instant Blockchain Sync: UI updates immediately after transactions.
+Real-Time Adoption Updates: UI instantly refreshes after blockchain interactions.
 
-MetaMask Integration: Auto-detect wallet, account changes, and networks.
+MetaMask Integration: Automatic wallet detection + handling of account & network changes.
 
-Toast Notifications: Clean success/error feedback system.
+Toast Notifications: Clean success/error messages for blockchain events.
 
-Robust Error Handling: Handles invalid inputs, transaction failures, and provider errors.
+Robust Error Handling: Covers invalid IDs, failed transactions, and provider issues.
 
-Gas Estimation: Smart gas calculation.
+Gas Estimation: Automatically estimates and uses optimal gas limits.
 
 🛡️ Security & UX Enhancements
 
-Pet ID Validation (0–15)
+Pet ID Validation: Ensures valid range (0–15) before sending transactions.
 
-Double-Adoption Prevention
+Double-Adoption Protection: Smart contract + frontend prevent re-adopting pets.
 
-Wallet Connection Management
+Wallet Management: Handles connection/disconnection states gracefully.
 
-Network Change Detection
+Network Change Awareness: App reloads automatically when user switches network.
 
-Transaction Locking to prevent double-spending
-
+Transaction Locking: Prevents duplicate clicks / double-spending during pending transactions.
 🏗️ Architecture
-<div align="center">
 
-</div>
-🧰 Tech Stack
-Layer	Technology	Purpose
-Blockchain	Ethereum (Ganache)	Local development blockchain
-Smart Contracts	Solidity 0.5.0	Pet adoption business logic
-Dev Framework	Truffle Suite	Contract compilation & deployment
-Frontend Framework	Bootstrap 5	Responsive UI components
-Blockchain Interaction	Web3.js 1.5.0	Ethereum JavaScript API
-Testing	Mocha / Chai	Smart contract unit testing
-Frontend	HTML5, CSS3, jQuery	UI and interactions
+![UI Screenshot](https://raw.githubusercontent.com/firas005/Pet-Shop/6ad5dfd9c6f1e573d0250ade28ed08ada68da694/ux.png)
+
+## 🧰 Tech Stack
+
+| **Layer**               | **Technology**        | **Purpose**                               |
+|------------------------|------------------------|-------------------------------------------|
+| **Blockchain**         | Ethereum (Ganache)     | Local development blockchain               |
+| **Smart Contracts**    | Solidity 0.5.0         | Business logic for pet adoption            |
+| **Development Framework** | Truffle Suite      | Contract compilation & deployment          |
+| **Frontend Framework** | Bootstrap 5            | Responsive UI components                   |
+| **Blockchain Interaction** | Web3.js 1.5.0     | Ethereum JavaScript API                    |
+| **Testing**            | Mocha / Chai          | Smart contract unit testing                |
+| **Frontend**           | HTML5, CSS3, jQuery    | User interface and interactions            |
+
 🚀 Quick Start
 Prerequisites
-
-Node.js 14+
-
-MetaMask
-
-Ganache (GUI or CLI)
-
-Git
-
+bash
+# Required software
+- Node.js (v14 or higher)
+- MetaMask browser extension
+- Ganache (local Ethereum network)
+- Git
+Installation Steps
 1. Clone & Setup
+bash
+# Clone repository
 git clone https://github.com/yourusername/pet-adoption-dapp.git
 cd pet-adoption-dapp
 
 # Install dependencies
 npm install
-
 2. Start Blockchain
-ganache-cli --port 7545
-
-
-Or open Ganache GUI → New Workspace.
-
-3. Deploy Smart Contracts
+bash
+# Start Ganache (GUI or CLI)
+# GUI: Open Ganache and create new workspace
+# CLI: ganache-cli --port 7545
+3. Deploy Contracts
+bash
+# Compile and deploy smart contracts
 truffle migrate --reset
 
+# Expected output:
+# 1_initial_migration.js
+# 2_deploy_contracts.js
+# Contract Address: 0x9E6fa4E55A5D4aBAAf85b14743688e2B3Faf1AeE
 4. Configure MetaMask
+Open MetaMask browser extension
 
-Network: Localhost 7545
+Switch to "Localhost 7545" network
 
-Import a Ganache account
+Import account from Ganache using private key
 
-Ensure 100 ETH test balance
+Ensure you have at least 100 ETH test balance
 
-5. Launch Frontend
+5. Launch Application
+bash
+# Start local server
 npx serve src
 
-
-(or python -m http.server 8000, etc.)
-
+# Or use any local server:
+# python -m http.server 8000
+# php -S localhost:8000
 6. Access DApp
+Open browser to http://localhost:3000
 
-Open: http://localhost:3000
+Connect MetaMask when prompted
 
-Connect MetaMask → Start adopting pets!
+Start adopting pets!
 
-📸 What the Demo Shows
 
-Wallet connection
 
-Browsing pets
+The demo showcases:
 
-Pet detail modal
+✅ Wallet connection with MetaMask
 
-Adoption on blockchain
+✅ Browsing available pets
 
-Real-time dashboard updates
+✅ Viewing detailed pet information
 
-Network switch detection
+✅ Adopting a pet via blockchain transaction
 
-Error-handling scenarios
+✅ Real-time dashboard updates
 
+✅ Handling failed transactions
+
+✅ Network switching detection
+
+Key UI Components
+Component	Description
+Dashboard	Shows adoption statistics and connected wallet address
+Pet Cards	Grid layout with pet images, details, and adoption status
+Details Modal	Comprehensive view with full pet description
+Notifications	Toast notifications for user feedback
+Progress Bar	Visual representation of adoption percentage
 🔧 Technical Details
-Smart Contract — Adoption.sol
+Smart Contract
+solidity
+// contracts/Adoption.sol
 pragma solidity ^0.5.0;
 
 contract Adoption {
+    // Stores adopter addresses for each pet (16 pets max)
     address[16] public adopters;
-
+    
+    // Adopt a pet - stores adopter's address
     function adopt(uint petId) public returns (uint) {
         require(petId >= 0 && petId <= 15, "Invalid pet ID");
         require(adopters[petId] == address(0), "Pet already adopted");
-
+        
         adopters[petId] = msg.sender;
         return petId;
     }
-
+    
+    // Retrieve all adopters
     function getAdopters() public view returns (address[16] memory) {
         return adopters;
     }
 }
-
-Deployment Config — truffle-config.js
-development: {
-  host: "127.0.0.1",
-  port: 7545,
-  network_id: "1337",
-  gas: 6721975,
-  gasPrice: 20000000000
+Contract Deployment
+javascript
+// truffle-config.js
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",     // Ganache RPC server
+      port: 7545,            // Ganache port
+      network_id: "1337",    // Ganache network ID
+      gas: 6721975,          // Gas limit
+      gasPrice: 20000000000  // Gas price (20 Gwei)
+    }
+  },
+  compilers: {
+    solc: {
+      version: "0.5.0"      // Solidity compiler version
+    }
+  }
+};
+Frontend-Blockchain Integration
+javascript
+// Key Web3.js interactions
+class AdoptionDApp {
+    async adoptPet(petId) {
+        // Get current account
+        const accounts = await web3.eth.getAccounts();
+        const currentAccount = accounts[0];
+        
+        // Execute adoption transaction
+        return await this.contract.methods.adopt(petId)
+            .send({
+                from: currentAccount,
+                gas: 500000
+            });
+    }
+    
+    async getAdoptionStatus() {
+        // Query blockchain for current adopters
+        return await this.contract.methods.getAdopters().call();
+    }
 }
-
-Frontend Integration Example
-async adoptPet(petId) {
-    const accounts = await web3.eth.getAccounts();
-    return await this.contract.methods.adopt(petId).send({
-        from: accounts[0],
-        gas: 500000
-    });
-}
-
 📁 Project Structure
+text
 pet-adoption-dapp/
-├── contracts/              
-│   ├── Adoption.sol
-│   └── Migrations.sol
-├── migrations/
+├── contracts/                   # Smart Contracts
+│   ├── Adoption.sol            # Main adoption contract
+│   └── Migrations.sol          # Truffle migration contract
+├── migrations/                  # Deployment Scripts
 │   ├── 1_initial_migration.js
 │   └── 2_deploy_contracts.js
-├── src/
-│   ├── index.html
-│   ├── css/style.css
-│   ├── js/app.js
-│   ├── js/web3.min.js
-│   ├── data/pets.json
-│   └── images/
-├── test/
-│   └── Adoption.test.js
-├── build/
-├── README.md
-├── package.json
-├── truffle-config.js
-└── bs-config.json
-
+├── src/                         # Frontend Application
+│   ├── index.html              # Main HTML file
+│   ├── css/
+│   │   └── style.css           # Custom styles
+│   ├── js/
+│   │   ├── app.js             # Main application logic
+│   │   └── web3.min.js        # Web3.js library
+│   ├── data/
+│   │   └── pets.json          # Pet data (16 pets)
+│   └── images/                 # Pet images
+├── test/                       # Smart Contract Tests
+│   └── Adoption.test.js        # Mocha/Chai tests
+├── build/                      # Compiled Contracts
+├── node_modules/               # Dependencies
+├── .github/                    # GitHub workflows
+├── README.md                   # This file
+├── package.json                # Project dependencies
+├── truffle-config.js          # Truffle configuration
+└── bs-config.json             # BrowserSync config
+Key Files Explained
+File	Purpose
+contracts/Adoption.sol	Core smart contract for pet adoption
+src/js/app.js	600+ lines of frontend logic with error handling
+src/data/pets.json	16 pet profiles with detailed information
+truffle-config.js	Blockchain network configuration
+test/Adoption.test.js	Unit tests for smart contract
 💡 Learning Outcomes
-Blockchain Development
+Blockchain Development Skills Acquired
+Smart Contract Development
+✅ Solidity Programming: Writing secure smart contracts with proper validation
 
-Solidity (validation, storage, events)
+✅ Truffle Framework: Contract compilation, testing, and deployment
 
-Truffle deployment
+✅ Gas Optimization: Understanding transaction costs and optimization
 
-Gas estimation / optimization
-
-Smart contract testing
+✅ Event Handling: Implementing and listening to blockchain events
 
 Frontend Integration
+✅ Web3.js Mastery: Interacting with Ethereum blockchain from JavaScript
 
-Web3.js interaction
+✅ MetaMask Integration: Wallet connection and transaction signing
 
-MetaMask provider handling
+✅ Real-time Updates: UI synchronization with blockchain state changes
 
-Real-time UI sync with blockchain
+✅ Error Handling: Comprehensive error management for failed transactions
 
-Architecture & Testing
+DApp Architecture
+✅ Decentralized Architecture: Understanding DApp components and flow
 
-Decentralized app structure
+✅ State Management: Managing application state with blockchain data
 
-State management
+✅ User Experience: Designing intuitive interfaces for blockchain interactions
 
-Mocha/Chai smart contract testing
+✅ Testing Strategies: Unit testing smart contracts with Mocha/Chai
 
-Challenges Solved
-Challenge	Solution
-Transaction reliability	Retry + error handling
-MetaMask issues	Provider fallbacks & monitoring
-Real-time updates	Event listeners & polling
-Gas errors	Manual gas limits
-Network switching	Auto page reload
-🛠️ Development Commands
+Challenges Overcome
+Challenge	Solution Implemented
+Transaction Reliability	Implemented retry logic and proper error handling
+MetaMask Connection Issues	Added multiple provider fallbacks and connection monitoring
+Real-time UI Updates	Created Web3 event listeners and status polling
+Gas Estimation Errors	Implemented manual gas limits and estimation handling
+Network Switching	Added automatic page reload on network change detection
+🛠️ Development
+Running Tests
+bash
+# Run smart contract tests
 truffle test
+
+# Test Output Includes:
+# ✓ can adopt a pet
+# ✓ can fetch adopters
+# ✓ can fetch single adopter
+# ✓ prevents adopting already adopted pets
+Development Commands
+bash
+# Compile contracts
 truffle compile
+
+# Deploy to development network
 truffle migrate --reset
+
+# Start development console
 truffle develop
+
+# Run linting (if configured)
 npm run lint
-
+Troubleshooting
+Issue	Solution
+MetaMask not connecting	Ensure Ganache is running on port 7545
+Transaction failing	Check account balance in Ganache
+Contract not loading	Verify contract address in CONFIG.js
+Pets not displaying	Check pets.json file path and structure
+Network errors	Confirm MetaMask is on correct network
 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-Licensed under the MIT License.
-
-<br> <div align="center">
-
+<div align="center">
 Built with ❤️ for the blockchain community
-⭐ Star this repo if you found it useful! ⭐
-<br>
-Contribute • Report Issues • Fork the Project
+Contribute: Fork and submit a PR • Report Issues: Open an issue • Star: If you found this helpful!
+
+Connect with me on LinkedIn • Check out my GitHub
 
 </div>
