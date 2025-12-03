@@ -6,10 +6,10 @@ Blockchain Pet Adoption DApp
 
 A decentralized pet adoption platform built on Ethereum blockchain
 
-https://img.shields.io/badge/Solidity-0.5.0-363636?logo=solidity
-https://img.shields.io/badge/Web3.js-1.5.0-F16822?logo=ethereum
-https://img.shields.io/badge/Bootstrap-5.3.0-7952B3?logo=bootstrap
-https://img.shields.io/badge/Truffle-Suite-5E464D?logo=truffle
+![Solidity Badge](https://img.shields.io/badge/Solidity-0.5.0-363636?logo=solidity)
+![Web3 Badge](https://img.shields.io/badge/Web3.js-1.5.0-F16822?logo=ethereum)
+![Bootstrap Badge](https://img.shields.io/badge/Bootstrap-5.3.0-7952B3?logo=bootstrap)
+![Truffle Badge](https://img.shields.io/badge/Truffle-Suite-5E464D?logo=truffle)
 
 Live Demo Video: Watch Demo • Try It: Local Setup Guide
 
