@@ -92,3 +92,94 @@ A decentralized pet adoption platform built on the Ethereum blockchain.
 git clone https://github.com/yourusername/pet-adoption-dapp.git
 cd pet-adoption-dapp
 npm install
+
+
+🚀 **Setup and Run**
+
+Start Ganache:  
+```bash
+ganache-cli --port 7545
+
+Deploy contracts:
+truffle migrate --reset
+Compile contracts:
+truffle compile
+Run tests:
+truffle test
+Start the frontend application:
+npm run dev
+!!Configure MetaMask: Select Localhost 7545 and import a Ganache private key.
+
+
+
+📜 Smart Contract: Adoption.sol
+pragma solidity ^0.5.0;
+
+contract Adoption {
+    address[16] public adopters;
+
+    function adopt(uint petId) public returns (uint) {
+        require(petId >= 0 && petId <= 15, "Invalid pet ID");
+        require(adopters[petId] == address(0), "Pet already adopted");
+        adopters[petId] = msg.sender;
+        return petId;
+    }
+
+    function getAdopters() public view returns (address[16] memory) {
+        return adopters;
+    }
+}
+
+⚙️ Truffle Deployment Configuration: truffle-config.js
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 7545,
+      network_id: "1337",
+      gas: 6721975,
+      gasPrice: 20000000000
+    }
+  },
+  compilers: {
+    solc: { version: "0.5.0" }
+  }
+};
+
+🗂 Project Structure
+pet-adoption-dapp/
+├── contracts/
+│   ├── Adoption.sol
+│   └── Migrations.sol
+├── migrations/
+├── src/
+│   ├── index.html
+│   ├── css/
+│   ├── js/
+│   ├── data/
+│   └── images/
+├── test/
+├── build/
+├── README.md
+├── package.json
+└── truffle-config.js
+
+💡 Learning Outcomes
+
+🔹 Solidity development and gas optimization
+
+🔹 Contract testing with Mocha/Chai
+
+🔹 Truffle workflows
+
+🔹 Web3.js frontend integration
+
+🔹 MetaMask connection and real-time UI sync
+
+🔹 Robust error handling
+
+🔹 Decentralized workflows and state management
+
+🔹 UX design for blockchain apps
+
+
